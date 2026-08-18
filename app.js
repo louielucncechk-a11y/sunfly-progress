@@ -9,6 +9,9 @@ let saveTimer = null;
 let toastTimer = null;
 let persistenceMode = "server";
 const isStaticDeployment = location.hostname === "progress.sunfly.hk" || location.hostname.endsWith(".github.io");
+const syncApiBase = isStaticDeployment ? "https://sunfly-progress-sync.luyinyu1998.workers.dev" : "";
+const dataEndpoint = `${syncApiBase}/api/data`;
+let syncEtag = null;
 
 const labels = {
   plan: { pending: "待确认", confirmed: "已确认", rejected: "需重做" },
@@ -55,23 +58,25 @@ function validateData(data) {
 
 async function loadData() {
   const local = localStorage.getItem("sunfly-progress-data-v1");
-  if (isStaticDeployment) {
-    persistenceMode = "browser";
-    if (local) state = validateData(JSON.parse(local));
-    else {
-      const response = await fetch("data/tracker-data.json", { cache: "no-store" });
-      if (!response.ok) throw new Error("无法读取初始数据");
-      state = validateData(await response.json());
-    }
-    setSaveState("saved", "浏览器本地保存");
-    localStorage.setItem("sunfly-progress-data-v1", JSON.stringify(state));
-    return;
-  }
   try {
-    const response = await fetch("/api/data", { cache: "no-store" });
+    const response = await fetch(dataEndpoint, { cache: "no-store" });
     if (!response.ok) throw new Error(`服务器返回 ${response.status}`);
-    state = validateData(await response.json());
-    setSaveState("saved", "数据已同步");
+    const remote = validateData(await response.json());
+    syncEtag = response.headers.get("ETag");
+    state = remote;
+
+    if (isStaticDeployment && local) {
+      const localData = validateData(JSON.parse(local));
+      const localTime = Date.parse(localData.updatedAt || "") || 0;
+      const remoteTime = Date.parse(remote.updatedAt || "") || 0;
+      if (localTime > remoteTime) {
+        state = localData;
+        const migrated = await writeToServer();
+        if (!migrated) return;
+        showToast("已将本浏览器较新的进度同步到云端");
+      }
+    }
+    setSaveState("saved", isStaticDeployment ? "云端已同步" : "数据已同步");
   } catch (error) {
     persistenceMode = "browser";
     if (local) {
@@ -112,18 +117,32 @@ async function persist(message) {
     return;
   }
   try {
-    const response = await fetch("/api/data", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(state),
-    });
-    if (!response.ok) throw new Error(`保存失败（${response.status}）`);
-    setSaveState("saved", "数据已同步");
+    const saved = await writeToServer();
+    if (!saved) return;
+    setSaveState("saved", isStaticDeployment ? "云端已同步" : "数据已同步");
     showToast(message);
   } catch (error) {
     setSaveState("error", "仅保存在本机浏览器");
     showToast(`服务器写入失败，已保存在当前浏览器：${error.message}`, true);
   }
+}
+
+async function writeToServer() {
+  const headers = { "Content-Type": "application/json" };
+  if (syncEtag) headers["If-Match"] = syncEtag;
+  const response = await fetch(dataEndpoint, {
+    method: "PUT",
+    headers,
+    body: JSON.stringify(state),
+  });
+  if (response.status === 409) {
+    setSaveState("error", "检测到其他设备的新修改");
+    showToast("云端数据已被其他设备更新。当前修改仍保存在本浏览器，请刷新页面后重新确认。", true);
+    return false;
+  }
+  if (!response.ok) throw new Error(`保存失败（${response.status}）`);
+  syncEtag = response.headers.get("ETag") || syncEtag;
+  return true;
 }
 
 function showToast(message, isError = false) {

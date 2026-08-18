@@ -1,0 +1,16 @@
+{
+  "name": "sunfly-progress-sync",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "types": "wrangler types",
+    "check": "tsc --noEmit && wrangler deploy --dry-run",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260817.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.123.0"
+  }
+}

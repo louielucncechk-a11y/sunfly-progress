@@ -1,4 +1,5 @@
 const assert = require("node:assert/strict");
+const fs = require("node:fs");
 const path = require("node:path");
 const { chromium } = require("playwright");
 
@@ -32,16 +33,25 @@ const { chromium } = require("playwright");
 
   const staticPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
   let putRequests = 0;
-  staticPage.on("request", (request) => { if (request.method() === "PUT") putRequests += 1; });
+  const fixture = fs.readFileSync(path.join(__dirname, "..", "data", "tracker-data.json"), "utf8");
+  await staticPage.route("https://sunfly-progress-sync.luyinyu1998.workers.dev/api/data", async (route) => {
+    if (route.request().method() === "PUT") {
+      putRequests += 1;
+      await route.fulfill({ status: 200, contentType: "application/json", headers: { ETag: '"rev-2"' }, body: '{"ok":true,"revision":2}' });
+      return;
+    }
+    await route.fulfill({ status: 200, contentType: "application/json", headers: { ETag: '"rev-1"' }, body: fixture });
+  });
   await staticPage.goto("http://progress.sunfly.hk:8765", { waitUntil: "networkidle" });
   await staticPage.locator("#projectRows tr").first().getByRole("button", { name: /查看/ }).click();
   await staticPage.locator('#roundForm button[type="submit"]').click();
   await staticPage.locator("#toast.show").waitFor();
-  assert.match(await staticPage.locator("#toast").innerText(), /已保存到当前浏览器/);
-  assert.equal(putRequests, 0, "静态站点不应发送服务器 PUT 请求");
+  assert.match(await staticPage.locator("#toast").innerText(), /本轮进度已保存/);
+  assert.equal(putRequests, 1, "静态站点应向云端发送一次 PUT 请求");
+  assert.match(await staticPage.locator("#saveState").innerText(), /云端已同步/);
 
   await browser.close();
-  console.log("界面测试通过：总览、10项数据、内部测试、两轮历史与只读保护均正常。");
+  console.log("界面测试通过：总览、10项数据、内部测试、两轮历史、只读保护与云端保存均正常。");
 })().catch((error) => {
   console.error(error);
   process.exit(1);

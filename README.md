@@ -8,7 +8,7 @@
 2. 浏览器会打开 `http://127.0.0.1:8765`。
 3. 保持服务窗口开启；关闭该窗口即停止网站。
 
-项目更新会写入 `data/tracker-data.json`，同时在当前浏览器保留一份本地副本。建议定期点击“导出完整备份”。CSV 导出可直接用 Excel 打开。
+本机模式会把更新写入 `data/tracker-data.json`，同时在当前浏览器保留一份副本。建议定期点击“导出完整备份”。CSV 导出可直接用 Excel 打开。
 
 ## 核心流程
 
@@ -18,13 +18,14 @@
 
 ## 正式网址
 
-目标地址为 `https://progress.sunfly.hk`。项目内已提供生产服务器启动方式和 Nginx 反向代理示例。要让公网地址真正生效，还需在域名 DNS 中把 `progress.sunfly.hk` 指向部署服务器，并为该域名配置 HTTPS 证书。
+公网地址为 `https://progress.sunfly.hk`。网站页面由 GitHub Pages 提供，数据通过 Cloudflare Workers + D1 免费服务在设备之间同步。页面右上角显示“云端已同步”即代表可正常读写。
 
-生产环境建议设置：
+云端接口代码在 `cloudflare-sync` 目录，线上地址为：
 
 ```text
-HOST=0.0.0.0
-PORT=8765
+https://sunfly-progress-sync.luyinyu1998.workers.dev
 ```
 
-请把 `data` 目录放在持久化磁盘中并纳入备份。
+当前按要求未设置登录权限。任何能打开网站的人都可以查看和修改进度，因此不要在表中存放密码、身份证号等敏感信息。需要保护时，可再增加登录或 Cloudflare Access。
+
+云端写入采用版本检查：若两台设备同时编辑，较旧页面不会直接覆盖较新的云端记录；页面会提示刷新确认。云端不可用时，修改仍会保留在当前浏览器中。
