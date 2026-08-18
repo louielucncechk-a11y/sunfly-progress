@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#13233a">
+  <meta name="description" content="沈飞公司检测报告进度控制中心">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2313233a'/%3E%3Cpath d='M17 18h30v8H25v8h18v8H25v8h22' fill='none' stroke='%23f07c32' stroke-width='6'/%3E%3C/svg%3E">
+  <link rel="canonical" href="https://progress.sunfly.hk/">
+  <title>检测报告进度控制中心｜沈飞公司</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#projectTable">跳到项目列表</a>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">SF</div>
+      <div>
+        <p class="eyebrow">沈飞公司 · 检测管理</p>
+        <h1>检测报告进度控制中心</h1>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="save-state" id="saveState"><span></span>数据已同步</div>
+      <button class="btn btn-ghost" id="settingsBtn" type="button">预警设置</button>
+      <button class="btn btn-primary" id="addProjectBtn" type="button">＋ 新增项目</button>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="hero" aria-labelledby="overviewTitle">
+      <div>
+        <p class="eyebrow">全过程循环跟踪</p>
+        <h2 id="overviewTitle">从方案到检测结论，每一步都可追溯</h2>
+        <p class="hero-copy">方案确认 → 生产 → 内部测试 → 运输 → 实验室检测 → 结果 → 原因与改进；未通过时开启下一轮，历史永久保留。</p>
+      </div>
+      <div class="hero-meta">
+        <span id="todayLabel"></span>
+        <span>数据源：Sheet1 · 10项</span>
+        <a href="https://progress.sunfly.hk" aria-label="正式网址">progress.sunfly.hk</a>
+      </div>
+    </section>
+
+    <section class="metric-grid" id="metrics" aria-label="进度概览"></section>
+
+    <section class="workspace-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">项目总览</p>
+          <h2>检测任务跟踪</h2>
+          <p id="resultCount" class="subtle"></p>
+        </div>
+        <div class="data-actions">
+          <button class="btn btn-ghost" id="importBtn" type="button">导入备份</button>
+          <button class="btn btn-ghost" id="exportJsonBtn" type="button">导出完整备份</button>
+          <button class="btn btn-ghost" id="exportCsvBtn" type="button">导出 Excel 可读表</button>
+          <input type="file" id="importFile" accept=".json,.csv,application/json,text/csv" hidden>
+        </div>
+      </div>
+
+      <div class="filters" aria-label="筛选条件">
+        <label class="search-field">
+          <span class="sr-only">搜索</span>
+          <input id="searchInput" type="search" placeholder="搜索项目、标准、跟进人…">
+        </label>
+        <label>
+          <span>地板类型</span>
+          <select id="materialFilter"><option value="all">全部类型</option></select>
+        </label>
+        <label>
+          <span>当前阶段</span>
+          <select id="stageFilter">
+            <option value="all">全部阶段</option>
+            <option value="proposal">待确认方案</option>
+            <option value="planned">方案已确认</option>
+            <option value="production">生产阶段</option>
+            <option value="internal_testing">内部测试</option>
+            <option value="transport">运输/待检测</option>
+            <option value="testing">检测中</option>
+            <option value="result">待判定</option>
+            <option value="analysis">待原因总结</option>
+            <option value="improving">整改中</option>
+            <option value="passed">已通过</option>
+          </select>
+        </label>
+        <label>
+          <span>风险状态</span>
+          <select id="riskFilter">
+            <option value="all">全部风险</option>
+            <option value="overdue">已逾期</option>
+            <option value="warning">临期</option>
+            <option value="abnormal">异常</option>
+            <option value="normal">正常</option>
+          </select>
+        </label>
+        <button class="btn btn-text" id="clearFiltersBtn" type="button">清除筛选</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="projectTable">
+          <thead>
+            <tr>
+              <th>项目 / 标准</th>
+              <th>当前阶段</th>
+              <th>本轮进度</th>
+              <th>关键日期</th>
+              <th>风险</th>
+              <th>轮次</th>
+              <th><span class="sr-only">操作</span></th>
+            </tr>
+          </thead>
+          <tbody id="projectRows"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" hidden>
+          <div aria-hidden="true">⌕</div>
+          <h3>没有符合条件的项目</h3>
+          <p>试试调整搜索词或清除筛选条件。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
+  <aside class="drawer" id="detailDrawer" aria-hidden="true" aria-labelledby="drawerTitle">
+    <div class="drawer-header">
+      <div>
+        <p class="eyebrow" id="drawerMaterial"></p>
+        <h2 id="drawerTitle">项目详情</h2>
+        <p id="drawerStandard" class="subtle"></p>
+      </div>
+      <button class="icon-btn" id="closeDrawerBtn" type="button" aria-label="关闭详情">×</button>
+    </div>
+    <div class="drawer-body">
+      <div class="detail-summary" id="detailSummary"></div>
+      <div class="round-toolbar">
+        <div>
+          <label for="roundSelect">查看轮次</label>
+          <select id="roundSelect"></select>
+        </div>
+        <button class="btn btn-accent" id="nextRoundBtn" type="button">↻ 开启下一轮</button>
+      </div>
+      <div class="history-note" id="historyNote"></div>
+      <form id="roundForm">
+        <section class="form-section">
+          <div class="form-section-title"><span>01</span><div><h3>方案确认</h3><p>是否已有可执行方案</p></div></div>
+          <div class="form-grid">
+            <label><span>方案状态</span><select name="plan.status"><option value="pending">待确认</option><option value="confirmed">已确认</option><option value="rejected">需重做</option></select></label>
+            <label><span>确认时间</span><input name="plan.confirmedAt" type="date"></label>
+            <label class="span-2"><span>方案说明</span><textarea name="plan.note" rows="2" placeholder="记录方案要点、评审意见"></textarea></label>
+          </div>
+        </section>
+        <section class="form-section">
+          <div class="form-section-title"><span>02</span><div><h3>生产</h3><p>样品、地板和支架准备</p></div></div>
+          <div class="form-grid">
+            <label><span>生产状态</span><select name="production.status"><option value="not_started">未开始</option><option value="in_progress">生产中</option><option value="completed">已完成</option><option value="blocked">受阻</option></select></label>
+            <label><span>开始时间</span><input name="production.startDate" type="date"></label>
+            <label><span>完成时间</span><input name="production.endDate" type="date"></label>
+            <label><span>样品/数量</span><input name="project.sampleRequirement" type="text"></label>
+          </div>
+        </section>
+        <section class="form-section">
+          <div class="form-section-title"><span>03</span><div><h3>内部测试</h3><p>生产完成后的出厂验证</p></div></div>
+          <div class="form-grid">
+            <label><span>内部测试状态</span><select name="internalTest.status"><option value="not_started">未开始</option><option value="in_progress">测试中</option><option value="completed">已完成</option><option value="blocked">受阻</option><option value="waived">原表未记录 / 豁免</option></select></label>
+            <label><span>内部测试结果</span><select name="internalTest.result"><option value="pending">待判定</option><option value="pass">通过</option><option value="fail">未通过</option></select></label>
+            <label><span>计划时间</span><input name="internalTest.plannedAt" type="date"></label>
+            <label><span>开始时间</span><input name="internalTest.startedAt" type="date"></label>
+            <label><span>完成时间</span><input name="internalTest.completedAt" type="date"></label>
+            <label><span>内部测试说明</span><input name="internalTest.note" type="text" placeholder="测试内容或结论"></label>
+          </div>
+        </section>
+        <section class="form-section">
+          <div class="form-section-title"><span>04</span><div><h3>运输</h3><p>发运与实验室签收</p></div></div>
+          <div class="form-grid">
+            <label><span>运输状态</span><select name="transport.status"><option value="not_started">未发运</option><option value="in_transit">运输中</option><option value="completed">已送达</option><option value="blocked">受阻</option></select></label>
+            <label><span>发运时间</span><input name="transport.shippedAt" type="date"></label>
+            <label><span>送达时间</span><input name="transport.deliveredAt" type="date"></label>
+          </div>
+        </section>
+        <section class="form-section">
+          <div class="form-section-title"><span>05</span><div><h3>实验室检测</h3><p>计划、开始与完成时间</p></div></div>
+          <div class="form-grid">
+            <label><span>检测状态</span><select name="test.status"><option value="not_started">未开始</option><option value="in_progress">检测中</option><option value="completed">已完成</option><option value="blocked">受阻</option></select></label>
+            <label><span>计划时间</span><input name="test.plannedAt" type="date"></label>
+            <label><span>开始时间</span><input name="test.startedAt" type="date"></label>
+            <label><span>完成时间</span><input name="test.completedAt" type="date"></label>
+          </div>
+        </section>
+        <section class="form-section result-section">
+          <div class="form-section-title"><span>06</span><div><h3>检测结果</h3><p>判定、报告与闭环</p></div></div>
+          <div class="form-grid">
+            <label><span>是否通过</span><select name="result.status"><option value="pending">待判定</option><option value="pass">通过</option><option value="fail">未通过</option><option value="exception">异常</option></select></label>
+            <label><span>报告日期</span><input name="result.reportDate" type="date"></label>
+            <label class="span-2"><span>未通过/异常原因总结</span><textarea name="reasonSummary" rows="3" placeholder="说明根因、现象和证据"></textarea></label>
+            <label class="span-2"><span>改进措施</span><textarea name="correctiveAction" rows="3" placeholder="记录下一轮需要落实的材料、工艺或方案调整"></textarea></label>
+            <label class="span-2"><span>后续跟进</span><textarea name="followUp" rows="2"></textarea></label>
+            <label class="span-2"><span>本轮备注</span><textarea name="notes" rows="2"></textarea></label>
+          </div>
+        </section>
+        <div class="form-footer">
+          <p id="roundUpdated"></p>
+          <button class="btn btn-primary" type="submit">保存本轮进度</button>
+        </div>
+      </form>
+    </div>
+  </aside>
+
+  <dialog id="projectDialog" class="dialog">
+    <form id="projectForm" method="dialog">
+      <div class="dialog-header"><div><p class="eyebrow">建立跟踪项</p><h2>新增检测项目</h2></div><button class="icon-btn" value="cancel" aria-label="关闭">×</button></div>
+      <div class="form-grid dialog-grid">
+        <label><span>地板类型 *</span><input name="material" required placeholder="例如：硫酸钙地板"></label>
+        <label><span>检测分类 *</span><input name="category" required placeholder="例如：防火性能检测"></label>
+        <label><span>检测项目 *</span><input name="name" required></label>
+        <label><span>标准 *</span><input name="standard" required placeholder="例如：EN 13501-1"></label>
+        <label><span>要求报告日期</span><input name="targetReportDate" type="date"></label>
+        <label><span>跟进人</span><input name="owner"></label>
+        <label class="span-2"><span>样品/数量</span><input name="sampleRequirement"></label>
+      </div>
+      <div class="dialog-actions"><button class="btn btn-ghost" value="cancel">取消</button><button class="btn btn-primary" id="confirmAddBtn" value="default">创建项目</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="settingsDialog" class="dialog dialog-small">
+    <form id="settingsForm" method="dialog">
+      <div class="dialog-header"><div><p class="eyebrow">提醒规则</p><h2>预警设置</h2></div><button class="icon-btn" value="cancel" aria-label="关闭">×</button></div>
+      <label class="settings-field"><span>提前预警天数</span><input name="warningDays" type="number" min="0" max="30" required><small>关键节点进入该天数范围时标记为“临期”。</small></label>
+      <div class="dialog-actions"><button class="btn btn-ghost" value="cancel">取消</button><button class="btn btn-primary" value="default">保存设置</button></div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="tracker-core.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

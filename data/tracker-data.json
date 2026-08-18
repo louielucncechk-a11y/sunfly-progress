@@ -1,0 +1,651 @@
+{
+  "version": 1,
+  "title": "检测报告进度控制中心",
+  "publicUrl": "https://progress.sunfly.hk",
+  "source": {
+    "fileName": "检测报告情况跟踪表260817.xlsx",
+    "sheet": "Sheet1",
+    "range": "A1:P29",
+    "sheetTitle": "检测报告情况跟踪表 2026-08-08",
+    "importedAt": "2026-08-18T10:00:00+08:00",
+    "recordCount": 10
+  },
+  "settings": {
+    "warningDays": 3
+  },
+  "updatedAt": "2026-08-18T12:13:45.242Z",
+  "projects": [
+    {
+      "id": "sf-cisca-concentrated",
+      "sequence": "1",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "力学性能检测（美标）",
+      "name": "集中载荷",
+      "standard": "CISCA — Concentrated loads",
+      "targetReportDate": "2026-08-21",
+      "sampleRequirement": "3套地板、12支架、12横梁",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第6行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-cisca-concentrated-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": "加强地板方案待落实到样品"
+          },
+          "production": {
+            "status": "not_started",
+            "startDate": "2026-08-19",
+            "endDate": "2026-08-20"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "2026-08-20",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": ""
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-21"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-21",
+            "startedAt": "",
+            "completedAt": ""
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": ""
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "等待加强地板；8月12日更新：准备制作钢筋混凝土模具。",
+          "notes": "原表备注：强化地板方案依然没有确定，力学性能测试可能延后。"
+        }
+      ]
+    },
+    {
+      "id": "sf-cisca-uniform",
+      "sequence": "2",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "力学性能检测（美标）",
+      "name": "均布载荷",
+      "standard": "CISCA — Uniform load",
+      "targetReportDate": "2026-08-21",
+      "sampleRequirement": "1套地板、4支架、4横梁",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第7行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-cisca-uniform-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": "加强地板方案待落实到样品"
+          },
+          "production": {
+            "status": "not_started",
+            "startDate": "2026-08-19",
+            "endDate": "2026-08-20"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "2026-08-20",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": ""
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-21"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-21",
+            "startedAt": "",
+            "completedAt": ""
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": ""
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "等待加强地板。",
+          "notes": "原表备注：强化地板方案依然没有确定，力学性能测试可能延后。"
+        }
+      ]
+    },
+    {
+      "id": "sf-astm-e136",
+      "sequence": "3",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "防火性能检测（美标）",
+      "name": "不燃性检测",
+      "standard": "ASTM E136",
+      "targetReportDate": "2026-09-04",
+      "sampleRequirement": "8件圆柱取样",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第10行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-astm-e136-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": "初步方案：用水泥灌制取样样品"
+          },
+          "production": {
+            "status": "in_progress",
+            "startDate": "2026-08-18",
+            "endDate": "2026-08-18"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "2026-08-18",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "重点检查样品中心温度与基材杂质。"
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-19"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-19",
+            "startedAt": "",
+            "completedAt": "2026-08-31"
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": "2026-09-04"
+          },
+          "reasonSummary": "中心温度显示过高，可能因为基底中含纸屑与纤维。",
+          "correctiveAction": "制作不含纸屑的板材后重新取样。",
+          "followUp": "计划8月18日安排工厂制作两块无纸屑板材。",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "sf-en13501-1",
+      "sequence": "4",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "防火性能检测（欧标）",
+      "name": "燃烧性能分级",
+      "standard": "EN 13501-1",
+      "targetReportDate": "2026-09-04",
+      "sampleRequirement": "8件圆柱取样；胶水固体100g；硫酸钙100g",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第11–12行",
+      "archived": false,
+      "createdAt": "2026-08-10T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-en13501-1-1",
+          "number": 1,
+          "createdAt": "2026-08-10T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "",
+            "note": "首轮送检方案"
+          },
+          "production": {
+            "status": "completed",
+            "startDate": "",
+            "endDate": ""
+          },
+          "internalTest": {
+            "status": "waived",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "源表未记录内部测试环节。"
+          },
+          "transport": {
+            "status": "completed",
+            "shippedAt": "",
+            "deliveredAt": ""
+          },
+          "test": {
+            "status": "completed",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "2026-08-13"
+          },
+          "result": {
+            "status": "fail",
+            "reportDate": "2026-08-13"
+          },
+          "reasonSummary": "首轮测试未通过，报告显示胶水热值过高。",
+          "correctiveAction": "更换燃烧热值更低的胶水。",
+          "followUp": "8月13日形成初步整改方案。",
+          "notes": "原表记录：2026/8/13 报告 fail。"
+        },
+        {
+          "id": "round-en13501-1-2",
+          "number": 2,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": "采用低热值胶水并使用无纸屑板材重测"
+          },
+          "production": {
+            "status": "in_progress",
+            "startDate": "2026-08-18",
+            "endDate": "2026-08-18"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "2026-08-18",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "确认低热值胶水与无纸屑板材后再发运。"
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-19"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-19",
+            "startedAt": "",
+            "completedAt": "2026-09-04"
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": "2026-09-04"
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "计划8月18日让工厂制作两块无纸屑板材并取样。",
+          "notes": "第二轮（重测），完整保留第一轮失败记录。"
+        }
+      ]
+    },
+    {
+      "id": "sf-en13501-2",
+      "sequence": "5",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "系统防火性能检测（欧标）",
+      "name": "耐火性能 REI60",
+      "standard": "EN 13501-2",
+      "targetReportDate": "2026-08-31",
+      "sampleRequirement": "35块地板及特制支架系统",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第14行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-en13501-2-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "pending",
+            "confirmedAt": "2026-08-17",
+            "note": "现有方案：支架横梁灌水泥、板间贴防火膨胀条、板下贴隔热膜"
+          },
+          "production": {
+            "status": "completed",
+            "startDate": "",
+            "endDate": ""
+          },
+          "internalTest": {
+            "status": "waived",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "源表未记录内部测试环节，样品已送达实验室。"
+          },
+          "transport": {
+            "status": "completed",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-17"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-24",
+            "startedAt": "",
+            "completedAt": "2026-08-31"
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": "2026-08-31"
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "等待系统防火安排。8月17日 Intertek 通知可以开始安装地板，计划下周测试。",
+          "notes": "地板已在实验室，防火方案仍在讨论。"
+        }
+      ]
+    },
+    {
+      "id": "sf-en12825",
+      "sequence": "6",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "力学性能检测（欧标）",
+      "name": "活动地板力学性能",
+      "standard": "EN 12825",
+      "targetReportDate": "2026-09-04",
+      "sampleRequirement": "7块地板及28套支架横梁",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第17行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-en12825-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": ""
+          },
+          "production": {
+            "status": "blocked",
+            "startDate": "2026-08-19",
+            "endDate": "2026-08-20"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "待加强地板及配套支架完成后安排。"
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-21"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-21",
+            "startedAt": "",
+            "completedAt": "2026-09-04"
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": "2026-09-04"
+          },
+          "reasonSummary": "暂停中，等待地板支架。",
+          "correctiveAction": "完成加强地板与配套支架后恢复送检。",
+          "followUp": "等待加强地板。",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "id": "sf-en1081",
+      "sequence": "7",
+      "material": "硫酸钙地板（六面包钢）",
+      "category": "导电性能检测（欧标）",
+      "name": "地板电阻检测",
+      "standard": "EN 1081",
+      "targetReportDate": "2026-08-21",
+      "sampleRequirement": "3块钢壳，防静电处理后制作地板送检",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第19–20行",
+      "archived": false,
+      "createdAt": "2026-08-14T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-sf-en1081-1",
+          "number": 1,
+          "createdAt": "2026-08-14T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "",
+            "note": "报告注明 PRT-C8-FS2000 PVC 贴片"
+          },
+          "production": {
+            "status": "completed",
+            "startDate": "",
+            "endDate": ""
+          },
+          "internalTest": {
+            "status": "waived",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "源表未记录内部测试环节。"
+          },
+          "transport": {
+            "status": "completed",
+            "shippedAt": "",
+            "deliveredAt": ""
+          },
+          "test": {
+            "status": "in_progress",
+            "plannedAt": "",
+            "startedAt": "2026-08-14",
+            "completedAt": ""
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": ""
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "3块钢壳做防静电处理后制作地板送检。",
+          "notes": "报告只显示贴片检测，经商议可注明贴片型号。"
+        }
+      ]
+    },
+    {
+      "id": "steel-en13501-2",
+      "sequence": "8",
+      "material": "全钢地板",
+      "category": "系统防火性能检测（欧标）",
+      "name": "耐火性能 REI60",
+      "standard": "EN 13501-2",
+      "targetReportDate": "",
+      "sampleRequirement": "待定",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第23行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-steel-en13501-2-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "pending",
+            "confirmedAt": "",
+            "note": "暂考虑使用硫酸钙地板检测报告替代"
+          },
+          "production": {
+            "status": "not_started",
+            "startDate": "",
+            "endDate": ""
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": ""
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": ""
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": ""
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": ""
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "",
+          "notes": "提交时间待定。"
+        }
+      ]
+    },
+    {
+      "id": "steel-iso10848-2",
+      "sequence": "9",
+      "material": "全钢地板",
+      "category": "隔音性能检测（英标）",
+      "name": "侧向传声隔声检测",
+      "standard": "ISO 10848-2",
+      "targetReportDate": "",
+      "sampleRequirement": "待定",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第26行",
+      "archived": false,
+      "createdAt": "2026-08-17T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-steel-iso10848-2-1",
+          "number": 1,
+          "createdAt": "2026-08-17T09:00:00+08:00",
+          "plan": {
+            "status": "pending",
+            "confirmedAt": "",
+            "note": "暂考虑使用硫酸钙地板检测报告替代"
+          },
+          "production": {
+            "status": "not_started",
+            "startDate": "",
+            "endDate": ""
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": ""
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": ""
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": ""
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": ""
+          },
+          "reasonSummary": "",
+          "correctiveAction": "",
+          "followUp": "",
+          "notes": "提交时间待定。"
+        }
+      ]
+    },
+    {
+      "id": "steel-en1081",
+      "sequence": "10",
+      "material": "全钢地板",
+      "category": "导电性能检测（欧标）",
+      "name": "地板电阻检测",
+      "standard": "EN 1081",
+      "targetReportDate": "2026-09-04",
+      "sampleRequirement": "3块板 + 防静电喷涂",
+      "owner": "刘建利 / 刘瀚文",
+      "sourceRow": "Sheet1 第29行",
+      "archived": false,
+      "createdAt": "2026-08-15T09:00:00+08:00",
+      "updatedAt": "2026-08-18T10:00:00+08:00",
+      "rounds": [
+        {
+          "id": "round-steel-en1081-1",
+          "number": 1,
+          "createdAt": "2026-08-15T09:00:00+08:00",
+          "plan": {
+            "status": "confirmed",
+            "confirmedAt": "2026-08-17",
+            "note": ""
+          },
+          "production": {
+            "status": "blocked",
+            "startDate": "2026-08-15",
+            "endDate": "2026-08-15"
+          },
+          "internalTest": {
+            "status": "not_started",
+            "plannedAt": "",
+            "startedAt": "",
+            "completedAt": "",
+            "result": "pending",
+            "note": "待610×610板材到位后安排。"
+          },
+          "transport": {
+            "status": "not_started",
+            "shippedAt": "",
+            "deliveredAt": "2026-08-16"
+          },
+          "test": {
+            "status": "not_started",
+            "plannedAt": "2026-08-17",
+            "startedAt": "",
+            "completedAt": "2026-08-28"
+          },
+          "result": {
+            "status": "pending",
+            "reportDate": "2026-09-04"
+          },
+          "reasonSummary": "目前没有 610×610 板材，计划被阻塞。",
+          "correctiveAction": "后续板材到位后恢复生产与送检。",
+          "followUp": "等待中天后续板材。",
+          "notes": ""
+        }
+      ]
+    }
+  ]
+}
