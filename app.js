@@ -7,6 +7,8 @@ let selectedProjectId = null;
 let selectedRoundIndex = 0;
 let saveTimer = null;
 let toastTimer = null;
+let persistenceMode = "server";
+const isStaticDeployment = location.hostname === "progress.sunfly.hk" || location.hostname.endsWith(".github.io");
 
 const labels = {
   plan: { pending: "待确认", confirmed: "已确认", rejected: "需重做" },
@@ -53,12 +55,25 @@ function validateData(data) {
 
 async function loadData() {
   const local = localStorage.getItem("sunfly-progress-data-v1");
+  if (isStaticDeployment) {
+    persistenceMode = "browser";
+    if (local) state = validateData(JSON.parse(local));
+    else {
+      const response = await fetch("data/tracker-data.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("无法读取初始数据");
+      state = validateData(await response.json());
+    }
+    setSaveState("saved", "浏览器本地保存");
+    localStorage.setItem("sunfly-progress-data-v1", JSON.stringify(state));
+    return;
+  }
   try {
     const response = await fetch("/api/data", { cache: "no-store" });
     if (!response.ok) throw new Error(`服务器返回 ${response.status}`);
     state = validateData(await response.json());
     setSaveState("saved", "数据已同步");
   } catch (error) {
+    persistenceMode = "browser";
     if (local) {
       state = validateData(JSON.parse(local));
       setSaveState("error", "使用浏览器本地数据");
@@ -91,6 +106,11 @@ function queueSave(message = "进度已保存") {
 }
 
 async function persist(message) {
+  if (persistenceMode === "browser") {
+    setSaveState("saved", "浏览器本地保存");
+    showToast(`${message}（已保存到当前浏览器）`);
+    return;
+  }
   try {
     const response = await fetch("/api/data", {
       method: "PUT",

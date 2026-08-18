@@ -3,7 +3,11 @@ const path = require("node:path");
 const { chromium } = require("playwright");
 
 (async () => {
-  const browser = await chromium.launch({ headless: true, executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe" });
+  const browser = await chromium.launch({
+    headless: true,
+    executablePath: "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+    args: ["--host-resolver-rules=MAP progress.sunfly.hk 127.0.0.1"],
+  });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
   const errors = [];
   page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
@@ -25,6 +29,17 @@ const { chromium } = require("playwright");
   await page.screenshot({ path: path.join(__dirname, "detail.png"), fullPage: true });
 
   assert.deepEqual(errors, [], `页面不应出现错误：${errors.join(" | ")}`);
+
+  const staticPage = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  let putRequests = 0;
+  staticPage.on("request", (request) => { if (request.method() === "PUT") putRequests += 1; });
+  await staticPage.goto("http://progress.sunfly.hk:8765", { waitUntil: "networkidle" });
+  await staticPage.locator("#projectRows tr").first().getByRole("button", { name: /查看/ }).click();
+  await staticPage.locator('#roundForm button[type="submit"]').click();
+  await staticPage.locator("#toast.show").waitFor();
+  assert.match(await staticPage.locator("#toast").innerText(), /已保存到当前浏览器/);
+  assert.equal(putRequests, 0, "静态站点不应发送服务器 PUT 请求");
+
   await browser.close();
   console.log("界面测试通过：总览、10项数据、内部测试、两轮历史与只读保护均正常。");
 })().catch((error) => {
